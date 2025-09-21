@@ -8,7 +8,7 @@ import prettyPrint from "./prettyprint.js";
 // Print a chessboard with their two dimensional positions
 // [0,0],[0,1]
 
-export default class Graph {
+export default class KnightTravails {
     board;
 
     initialize = () => {
@@ -22,8 +22,11 @@ export default class Graph {
         this.board = nestedArray;
     }
 
+    // Identify the possible moves in a current position
+    
+
 }
 
-const graph = new Graph();
+const graph = new KnightTravails();
 graph.initialize();
 prettyPrint(graph.board);
