@@ -27,42 +27,25 @@ export default class KnightTravails {
     getKnightMoves = (currentPosition) => {
         // Two Steps Forward, One Step to Sides
         const differences = [
-            [1,-2], [2,-1], [1,2], [2,1],
-            [-1,-2], [-2,-1], [-1,2], [-2,1],
+            [1, -2], [2, -1], [1, 2], [2, 1],
+            [-1, -2], [-2, -1], [-1, 2], [-2, 1],
         ]
-        // If the current position is [3,3]
-        /* 
-            [3,3]
-            +1 -2
-            +1 +2
-            +2 -1
-            +2 +1
 
-            -1 -2
-            -1 +2
-            -2 -1
-            -2 +2
-        */
-        // Max moves is always 8
-        // Each possible position must be
-        // One has to have two difference
-        // The other has to have only one difference
-        const moves = differences.map((difference) => {
+        const moves = differences.reduce((accumulator, difference) => {
             const row = currentPosition[0] + difference[0]
             const column = currentPosition[1] + difference[1]
-            return [row, column];
-        })
+            if (row >= 0 && row <= 7 && column >= 0 && column <= 7) {
+                accumulator.push([row, column]);
+            }
 
-        // Filter out moves that aren't valid.
-
-        return moves
-
-        // Don't add if it outside the valid range of indexes
+            return accumulator;
+        }, []);
+        return moves;
     }
 
 }
 
 const graph = new KnightTravails();
 graph.initialize();
-/* prettyPrint(graph.board); */
-graph.getKnightMoves([3,3]);
+prettyPrint(graph.board);
+graph.getKnightMoves([0, 0]);
