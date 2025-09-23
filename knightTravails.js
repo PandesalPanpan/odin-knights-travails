@@ -51,34 +51,47 @@ export default class KnightTravails {
     knightMoves = (currentPosition, goalPosition) => {
         // Find the shortest path using BSF
         // Loop through until it finds the shortest path
-        const queue = [currentPosition];
+        // What if the queue stores a set of moves?
+        // then grab the possible moves by grabbing the last element of set of moves
+        const queue = [[currentPosition]];
         const visited = [];
+        let currentPath;
         // I need to somehow remember the previous set of moves for each
         // moves
         while (queue.length > 0) {
             // Grab the item in the queue
-            const current = queue.shift();
-            if (current[0] == goalPosition[0] && current[1] == goalPosition[1]) {
-                return current;
+            currentPath = queue.shift();
+            // Check if the last element of current is equal to goalPosition
+            const latestPosition = currentPath.at(-1);
+
+            if (latestPosition[0] == goalPosition[0] && latestPosition[1] == goalPosition[1]) {
+                break;
             }
 
-            // The queue is pushing a single element with two arrays
-            const moves = this.getKnightMoves(current);
+            const moves = this.getKnightMoves(latestPosition);
             moves.forEach((move) => {
                 if (!visited.includes(move)) {
-                    queue.push(move);
+                    queue.push([...currentPath, move]);
                 }
             })
 
-            visited.push(current);
+            visited.push(latestPosition);
             // Check if the position matches currentPosition
         }
 
+        // Don't count the initial position as moves
+        console.log(`You made it in ${currentPath.length - 1} moves! Here's your path:`)
+        currentPath.forEach((move) => {
+            const moveString = JSON.stringify(move);
+            console.log(moveString);
+        })
     }
 
 }
 
-const graph = new KnightTravails();
-graph.initialize();
-prettyPrint(graph.board);
-graph.getKnightMoves([0, 0]);
+const knight = new KnightTravails();
+knight.initialize();
+knight.knightMoves([0,0],[3,3]);
+knight.knightMoves([3,3],[0,0]);
+knight.knightMoves([0,0],[7,7]);
+knight.knightMoves([3,3],[4,3]);
