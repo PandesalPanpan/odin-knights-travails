@@ -43,6 +43,39 @@ export default class KnightTravails {
         return moves;
     }
 
+    /* 
+        knightMoves(currentPosition, goalPosition)
+        returns the shortest path move set
+        Usage: knightMoves([3,3],[5,4])
+    */
+    knightMoves = (currentPosition, goalPosition) => {
+        // Find the shortest path using BSF
+        // Loop through until it finds the shortest path
+        const queue = [currentPosition];
+        const visited = [];
+        // I need to somehow remember the previous set of moves for each
+        // moves
+        while (queue.length > 0) {
+            // Grab the item in the queue
+            const current = queue.shift();
+            if (current[0] == goalPosition[0] && current[1] == goalPosition[1]) {
+                return current;
+            }
+
+            // The queue is pushing a single element with two arrays
+            const moves = this.getKnightMoves(current);
+            moves.forEach((move) => {
+                if (!visited.includes(move)) {
+                    queue.push(move);
+                }
+            })
+
+            visited.push(current);
+            // Check if the position matches currentPosition
+        }
+
+    }
+
 }
 
 const graph = new KnightTravails();
